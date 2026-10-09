@@ -39,13 +39,13 @@ void WritePng(FILE* Pngname, unit32 Width, unit32 Height, unit32 bpp, unit8* Bit
 	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (png_ptr == NULL)
 	{
-		printf("PNGĞÅÏ¢´´½¨Ê§°Ü!\n");
+		printf("PNGä¿¡æ¯åˆ›å»ºå¤±è´¥!\n");
 		exit(0);
 	}
 	info_ptr = png_create_info_struct(png_ptr);
 	if (info_ptr == NULL)
 	{
-		printf("infoĞÅÏ¢´´½¨Ê§°Ü!\n");
+		printf("infoä¿¡æ¯åˆ›å»ºå¤±è´¥!\n");
 		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
 		exit(0);
 	}
@@ -72,7 +72,7 @@ void WritePng(FILE* Pngname, unit32 Width, unit32 Height, unit32 bpp, unit8* Bit
 	}
 	else
 	{
-		printf("²»Ö§³ÖµÄbppÀàĞÍ!bpp:%d\n", bpp);
+		printf("ä¸æ”¯æŒçš„bppç±»å‹!bpp:%d\n", bpp);
 		system("pause");
 		exit(0);
 	}
@@ -125,7 +125,7 @@ void process(std::string FileName, std::string PngName) {
 			memcpy((void*)&count, compressed + cdatap + 1, 1);
 			cdatap += 2;
 
-			//charÀàĞÍ»áÒç³ö
+			//charç±»å‹ä¼šæº¢å‡º
 			if (count == 0) {
 				count32 = 256;
 			}
@@ -136,15 +136,15 @@ void process(std::string FileName, std::string PngName) {
 
 			if (alpha != 0) {
 				for (int i = 0; i < count32; i++) {
-					//ÒÆÎ»Ã²ËÆĞĞ²»Í¨
+					//ç§»ä½è²Œä¼¼è¡Œä¸é€š
 					//pixel = (alpha << 18) | (compressed[cdatap] << 10) | (compressed[cdatap + 1] << 8) | compressed[cdatap + 2];
 					//memcpy(uncompressed + udatap, &pixel, 4);
 
-					uncompressed[udatap] = compressed[cdatap + 2];	//RBÍ¨µÀ½»»»£¿
+					uncompressed[udatap] = compressed[cdatap + 2];	//RBé€šé“äº¤æ¢ï¼Ÿ
 					uncompressed[udatap + 1] = compressed[cdatap + 1];
 					uncompressed[udatap + 2] = compressed[cdatap];
 					uncompressed[udatap + 3] = (char)alpha;
-					//ÏòÇ°ÍÆ½ø
+					//å‘å‰æ¨è¿›
 					udatap += 4;
 					cdatap += 3;
 				}
@@ -153,7 +153,7 @@ void process(std::string FileName, std::string PngName) {
 				pixel = 0;
 				for (int i = 0; i < count32; i++) {
 					memcpy(uncompressed + udatap, &pixel, 4);
-					//Ìî³ä0
+					//å¡«å……0
 					udatap += 4;
 				}
 			}

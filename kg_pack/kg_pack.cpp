@@ -27,19 +27,19 @@ struct kgheader {
 
 const char magic[] = { 0x47, 0x43, 0x47, 0x4B };
 
-//±»Ñ¹ËõÊı¾İµÄ»ù±¾³¤¶ÈÊÇ2£¨alphaºÍalpha_count£©¡£Ëæºó¸½¼Ó n * 3 µÄRGBÊıÖµ¡£
-//Ê×ÏÈ¼ÆËã³¤¶È²¢·ÖÅä¿Õ¼ä¡£
-//¶ÁÈ¡Ò»ĞĞÏñËØ¡£¼ÇÂ¼Ê×¸öÏñËØalpha¡£²éÕÒºóÒ»¸öÏñËØalpha£¬±È½ÏÊÇ·ñÏàÍ¬¡£ÏàÍ¬Ôòalpha_count++£¬¼ÌĞøÏòºó²éÕÒ¡£
-//µ±ÕâĞĞµÚn¸öÏñËØµÄalphaÓëÇ°Ãæ¶¼²»Ò»ÑùÊ±£¬Í£Ö¹²éÕÒ¡£ÒÀ´ÎĞ´Èë[alpha][alpha_count][Ã¿Ò»ÏñËØRGBÖµ]
-//ÌØ±ğ×¢Òâµ±ÏñËØalphaÎª0Ê±²»ĞèÒªĞ´ÈëRGBÊı¾İ£¬ÇÒalpha_count×î´óÎª256,Ğ´ÈëÊı¾İÎª0x00
-//ÉÏÃæ²½ÖèÖØ¸´µ½¸ÃĞĞÈ«²¿ÅĞ¶ÏÍê±Ï¡£
-//offset_tableËæĞĞÊıÔö¼Ó£¬Ã¿ÔªËØÊıÖµµÈÓÚµ±Ç°ĞĞÍê³ÉÑ¹ËõÇ°µÄsize¡£
+//è¢«å‹ç¼©æ•°æ®çš„åŸºæœ¬é•¿åº¦æ˜¯2ï¼ˆalphaå’Œalpha_countï¼‰ã€‚éšåé™„åŠ  n * 3 çš„RGBæ•°å€¼ã€‚
+//é¦–å…ˆè®¡ç®—é•¿åº¦å¹¶åˆ†é…ç©ºé—´ã€‚
+//è¯»å–ä¸€è¡Œåƒç´ ã€‚è®°å½•é¦–ä¸ªåƒç´ alphaã€‚æŸ¥æ‰¾åä¸€ä¸ªåƒç´ alphaï¼Œæ¯”è¾ƒæ˜¯å¦ç›¸åŒã€‚ç›¸åŒåˆ™alpha_count++ï¼Œç»§ç»­å‘åæŸ¥æ‰¾ã€‚
+//å½“è¿™è¡Œç¬¬nä¸ªåƒç´ çš„alphaä¸å‰é¢éƒ½ä¸ä¸€æ ·æ—¶ï¼Œåœæ­¢æŸ¥æ‰¾ã€‚ä¾æ¬¡å†™å…¥[alpha][alpha_count][æ¯ä¸€åƒç´ RGBå€¼]
+//ç‰¹åˆ«æ³¨æ„å½“åƒç´ alphaä¸º0æ—¶ä¸éœ€è¦å†™å…¥RGBæ•°æ®ï¼Œä¸”alpha_countæœ€å¤§ä¸º256,å†™å…¥æ•°æ®ä¸º0x00
+//ä¸Šé¢æ­¥éª¤é‡å¤åˆ°è¯¥è¡Œå…¨éƒ¨åˆ¤æ–­å®Œæ¯•ã€‚
+//offset_tableéšè¡Œæ•°å¢åŠ ï¼Œæ¯å…ƒç´ æ•°å€¼ç­‰äºå½“å‰è¡Œå®Œæˆå‹ç¼©å‰çš„sizeã€‚
 
 void ReadPng(FILE* pngfile,const char*lpFileName)
 {
 	unit64 pixelR, pixelG, pixelB, pixelA;
-	png_bytep row_buf;	//´æ·Åµ±Ç°ĞĞµÄ»º³åÇø
-	unit8* pSrc;		//ÓÃÓÚÖ¸Ïòrow_bufµÄÖ¸Õë
+	png_bytep row_buf;	//å­˜æ”¾å½“å‰è¡Œçš„ç¼“å†²åŒº
+	unit8* pSrc;		//ç”¨äºæŒ‡å‘row_bufçš„æŒ‡é’ˆ
 	png_structp png_ptr;
 	png_infop info_ptr;
 
@@ -65,7 +65,7 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 	printf("width = %d\n", info_ptr->width);
 	printf("height = %d\n", info_ptr->height);
 	
-	//´ò¿ªÊä³öÎÄ¼ş
+	//æ‰“å¼€è¾“å‡ºæ–‡ä»¶
 	std::ofstream out;
 	out.open(lpFileName, std::ios::binary);
 
@@ -73,47 +73,47 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 	//memcpy(k.magic, magic, 4);
 	k.width = info_ptr->width;
 	k.height = info_ptr->height;
-	//unit32 size = 0;//´óĞ¡¼ÆÊı
+	//unit32 size = 0;//å¤§å°è®¡æ•°
 
-	//Ìî³äÎ»ÖÃµ½´ïbitmap_data´¦
+	//å¡«å……ä½ç½®åˆ°è¾¾bitmap_dataå¤„
 	char cc[1] = { 0xcc };
 	for (int i = 0; i < sizeof(k) + 4 * k.height; i++) {
 		out.write(cc,1);
 	}
 	//out.flush();
-	//Ã¿Ò»ĞĞµÄ£¬pSrc
+	//æ¯ä¸€è¡Œçš„ï¼ŒpSrc
 	int p = 0;
-	//ÉÏÒ»¸öoffsetÈë¿Ú
+	//ä¸Šä¸€ä¸ªoffsetå…¥å£
 	int pprev =0;
 
-	//´æ·ÅÃ¿ĞĞÏñËØÆğÊ¼µØÖ·µÄtable
+	//å­˜æ”¾æ¯è¡Œåƒç´ èµ·å§‹åœ°å€çš„table
 	unit32* offset_table = new unit32[info_ptr->height];
 
-	//ÎªÃ¿Ò»ĞĞµÄÏñËØ·ÖÅä¿Õ¼ä
+	//ä¸ºæ¯ä¸€è¡Œçš„åƒç´ åˆ†é…ç©ºé—´
 	row_buf = (png_bytep)png_malloc(png_ptr, png_get_rowbytes(png_ptr, info_ptr));
 	for (int i = 0; i < info_ptr->height; i++) {
 		p = 0;
 		
 		png_read_rows(png_ptr, (png_bytepp)&row_buf, NULL, 1);
 		//printf("Rows:%d:\n", i);
-		//¼ÇÂ¼µ±Ç°ËùÔÚµÄÏñËØÎ»ÖÃ
+		//è®°å½•å½“å‰æ‰€åœ¨çš„åƒç´ ä½ç½®
 		int pixpos = 1;
-		//±£´æÏÂÈë¿Úµ½table
+		//ä¿å­˜ä¸‹å…¥å£åˆ°table
 		offset_table[i] = pprev;
 	seg1:
-		//alpha¼ÆÊı´Ó1¿ªÊ¼
+		//alphaè®¡æ•°ä»1å¼€å§‹
 		int count = 1;
-		//»ñÈ¡µÚÒ»¸öÏñËØalpha
+		//è·å–ç¬¬ä¸€ä¸ªåƒç´ alpha
 		int alpha = row_buf[p+3];
 		p += 4;
 
 		//row_buf:[RR][GG][BB][AA]|[RR][GG][BB][AA]|[RR][GG][BB][AA]
-		//		   ¡ü	        	|______ |______
+		//		   â†‘	        	|______ |______
 		//        pSrc					  | 	  |
 		//compressed:[AA][CC][RR][GG][BB][RR][GG][BB]
 
-		//Èç¹ûºóÒ»¸öÏñËØalphaÓëÖ®Ç°µÄÏàÍ¬¾Í¼ÆÊı£¬Ö±µ½²»ÏàÍ¬
-		//Í¬Ê±Ò²ÊÇ¼ÆËãÏÂÑ¹Ëõºó³¤¶È
+		//å¦‚æœåä¸€ä¸ªåƒç´ alphaä¸ä¹‹å‰çš„ç›¸åŒå°±è®¡æ•°ï¼Œç›´åˆ°ä¸ç›¸åŒ
+		//åŒæ—¶ä¹Ÿæ˜¯è®¡ç®—ä¸‹å‹ç¼©åé•¿åº¦
 		while (pixpos < info_ptr->width) {
 			if (row_buf[p + 3] == alpha) {
 				p += 4;
@@ -125,21 +125,21 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 				break;
 			}
 			
-			//Èç¹ûÍ¬Ò»¸öÏñËØ¹ı¶à£¬³¬¹ı256¸ö
+			//å¦‚æœåŒä¸€ä¸ªåƒç´ è¿‡å¤šï¼Œè¶…è¿‡256ä¸ª
 			if (count == 256) {
 				break;
-				//breakÖ®ºóºóÃæµÄÏñËØÖØĞÂ½øĞĞÅĞ¶Ï£¬²»¹ÜÇ°ÃæÏñËØÊÇ·ñÓëÆäÏàÍ¬
+				//breakä¹‹ååé¢çš„åƒç´ é‡æ–°è¿›è¡Œåˆ¤æ–­ï¼Œä¸ç®¡å‰é¢åƒç´ æ˜¯å¦ä¸å…¶ç›¸åŒ
 			}
 		}
 		//printf("Alpha:%02X,Count:%04d,Pixpos:%04d\n", alpha,count,pixpos);
-		//µ±Í¸Ã÷¶È²»Îª0Ê±£¨ÓĞÑÕÉ«Ê±£©
+		//å½“é€æ˜åº¦ä¸ä¸º0æ—¶ï¼ˆæœ‰é¢œè‰²æ—¶ï¼‰
 		if (alpha != 0) {
 			pprev += 2 + count * 3;
-			//Ô¤·ÖÅä´óĞ¡
+			//é¢„åˆ†é…å¤§å°
 			unit8* compressed = new unit8[2 + count * 3];
-			//Ìî³äÊı¾İ
+			//å¡«å……æ•°æ®
 			compressed[0] = alpha;
-			//µÈÓÚ256µÄÊı×ÖÒÔ0´úÌæ
+			//ç­‰äº256çš„æ•°å­—ä»¥0ä»£æ›¿
 			if (count == 256) {
 				compressed[1] = 0;
 			}
@@ -152,18 +152,18 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 				compressed[2 + 0 + px] = row_buf[orgoffset + o + 0];
 				compressed[2 + 1 + px] = row_buf[orgoffset + o + 1];
 				compressed[2 + 2 + px] = row_buf[orgoffset + o + 2];
-				//        ¡ü  ¡ü  ¡ü              ¡ü        ¡ü   ¡ü
+				//        â†‘  â†‘  â†‘              â†‘        â†‘   â†‘
 				//alpha+count rgb  offset      offset     index  rgb
 				o += 4;
 				px += 3;
 			}
-			//Ğ´Èë
+			//å†™å…¥
 			out.write((const char*)compressed, count * 3 + 2);
 			//out.flush();
-			//ÊÍ·ÅÑ¹ËõÄÚÈİ¿Õ¼ä
+			//é‡Šæ”¾å‹ç¼©å†…å®¹ç©ºé—´
 			delete[] compressed;
 		}
-		//Ã»ÑÕÉ«¾ÍÖ±½ÓĞ´alphaºÍcountÁË
+		//æ²¡é¢œè‰²å°±ç›´æ¥å†™alphaå’Œcountäº†
 		else {
 			pprev += 2;
 			out.write((const char*)&alpha, 1);
@@ -175,13 +175,13 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 			}
 		}
 		//out.flush();
-		//Èç¹ûÕâÒ»ĞĞ»¹Ã»¶ÁÍê¾Í¼ÌĞø¶Á
+		//å¦‚æœè¿™ä¸€è¡Œè¿˜æ²¡è¯»å®Œå°±ç»§ç»­è¯»
 		if (pixpos != info_ptr->width)
 			goto seg1;
 
 	}
 
-	//Ğ´ÈëÎÄ¼şÍ·ÒÔ¼°offset_table
+	//å†™å…¥æ–‡ä»¶å¤´ä»¥åŠoffset_table
 	k.image_size = pprev;
 	out.seekp(std::ios::beg);
 	out.write(magic, 4);
@@ -206,6 +206,6 @@ int main(int argc,char**argv) {
 		printf("Usage: kg_depack.exe [kg_file]\n");
 	}
 	return 0;
-	//FILE* fp = fopen("E:\\GalGames_Work\\OnWork\\ÓÎÀÖÔ°ÀïµÄÈö½¿¹í\\chip_unpack\\testbench\\CFGChip.png","rb");
-	//ReadPng(fp, (char*)"E:\\GalGames_Work\\OnWork\\ÓÎÀÖÔ°ÀïµÄÈö½¿¹í\\chip_unpack\\testbench\\0001.kg");
+	//FILE* fp = fopen("E:\\GalGames_Work\\OnWork\\æ¸¸ä¹å›­é‡Œçš„æ’’å¨‡é¬¼\\chip_unpack\\testbench\\CFGChip.png","rb");
+	//ReadPng(fp, (char*)"E:\\GalGames_Work\\OnWork\\æ¸¸ä¹å›­é‡Œçš„æ’’å¨‡é¬¼\\chip_unpack\\testbench\\0001.kg");
 }
