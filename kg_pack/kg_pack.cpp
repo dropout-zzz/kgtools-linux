@@ -76,9 +76,9 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 	//unit32 size = 0;//大小计数
 
 	//填充位置到达bitmap_data处
-	char cc[1] = { 0xcc };
+	unsigned char cc[1] = { 0xcc };
 	for (int i = 0; i < sizeof(k) + 4 * k.height; i++) {
-		out.write(cc,1);
+		out.write((const char *)cc,1);
 	}
 	//out.flush();
 	//每一行的，pSrc
