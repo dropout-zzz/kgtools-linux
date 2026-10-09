@@ -1,6 +1,7 @@
 #include <png.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #ifdef _MSC_VER
 #include "pngstruct.h"
 #include "pnginfo.h"
@@ -203,14 +204,19 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 int main(int argc,char**argv) {
 	if (argc > 1) {
 		std::string filename(argv[1]);
+		if (access(filename.c_str(), R_OK) != 0) {
+			goto usage;
+		}
 		std::string kgfilename = filename.substr(0, filename.find_last_of(".")) + ".kg";
 		FILE* fp = fopen(filename.c_str(), "rb");
 		ReadPng(fp, kgfilename.c_str());
+		return 0;
 	}
 	else {
+usage:
 		printf("Usage: kg_pack.exe [png_file]\n");
+		return 1;
 	}
-	return 0;
 	//FILE* fp = fopen("E:\\GalGames_Work\\OnWork\\游乐园里的撒娇鬼\\chip_unpack\\testbench\\CFGChip.png","rb");
 	//ReadPng(fp, (char*)"E:\\GalGames_Work\\OnWork\\游乐园里的撒娇鬼\\chip_unpack\\testbench\\0001.kg");
 }

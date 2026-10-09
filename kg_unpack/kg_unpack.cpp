@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <png.h>
 #include <fstream>
 #include <string>
@@ -175,11 +176,16 @@ void process(std::string FileName, std::string PngName) {
 int main(int argc, char** argv) {
 	if (argc > 1) {
 		std::string filename(argv[1]);
+		if (access(filename.c_str(), R_OK) != 0) {
+			goto usage;
+		}
 		std::string pngfilename = filename.substr(0, filename.find_last_of(".")) + ".png";
 		process(filename, pngfilename);
+		return 0;
 	}
 	else {
+usage:
 		printf("Usage: kg_depack.exe [kg_file]\n");
+		return 1;
 	}
-	return 0;
 }
