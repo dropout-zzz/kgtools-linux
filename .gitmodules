@@ -1,0 +1,5 @@
+[submodule "libpng"]
+	path = external/libpng
+	url = https://github.com/pnggroup/libpng.git
+	branch = 1.6.59
+	shallow = true

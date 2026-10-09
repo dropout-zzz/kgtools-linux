@@ -1,8 +1,13 @@
 #include <png.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _MSC_VER
 #include "pngstruct.h"
 #include "pnginfo.h"
+#else
+#include "../external/libpng/pngstruct.h"
+#include "../external/libpng/pnginfo.h"
+#endif
 #include <fstream>
 
 typedef unsigned char  unit8;
