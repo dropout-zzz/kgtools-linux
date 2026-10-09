@@ -65,11 +65,13 @@ void ReadPng(FILE* pngfile,const char*lpFileName)
 	png_set_sig_bytes(png_ptr, 8);
 	png_read_info(png_ptr, info_ptr);
 
+#ifndef NDEBUG
 	printf("%s(%s)PNG INFO:\n", __FILE__, __FUNCTION__);
 	printf("pixel_depth = %d\n", info_ptr->pixel_depth);
 	printf("bit_depth = %d\n", info_ptr->bit_depth);
 	printf("width = %d\n", info_ptr->width);
 	printf("height = %d\n", info_ptr->height);
+#endif
 	
 	//打开输出文件
 	std::ofstream out;

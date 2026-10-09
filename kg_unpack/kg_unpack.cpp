@@ -107,7 +107,9 @@ void process(std::string FileName, std::string PngName) {
 	unit8* uncompressed = new unit8[4 * k.width * k.height];
 	unit32 addr = 0;
 	unit32 fpaddr = 0;
+#ifndef NDEBUG
 	printf("Width:%d\nHeight:%d\nImageSize:%04X\nRequested Uncompress Size:%04X\n", k.width, k.height, k.image_size, 4 * k.height * k.width);
+#endif
 	fpaddr = in.tellg();
 	in.seekg(fpaddr + 4 * k.height, std::ios::beg);
 	in.read((char*)compressed, k.image_size);
