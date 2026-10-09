@@ -208,7 +208,7 @@ int main(int argc,char**argv) {
 		ReadPng(fp, kgfilename.c_str());
 	}
 	else {
-		printf("Usage: kg_depack.exe [kg_file]\n");
+		printf("Usage: kg_pack.exe [png_file]\n");
 	}
 	return 0;
 	//FILE* fp = fopen("E:\\GalGames_Work\\OnWork\\游乐园里的撒娇鬼\\chip_unpack\\testbench\\CFGChip.png","rb");
