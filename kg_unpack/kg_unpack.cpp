@@ -10,7 +10,15 @@
 typedef unsigned char	 unit8;
 typedef unsigned short	 unit16;
 typedef unsigned int	 unit32;
+#if defined(__int64) || defined(_MSC_VER) || defined(__MINGW32__)
 typedef unsigned __int64 unit64;
+#else
+#ifdef _WIN32
+typedef unsigned long long unit64;
+#else
+typedef unsigned long unit64;
+#endif
+#endif
 
 
 struct kgheader {
