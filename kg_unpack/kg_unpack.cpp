@@ -74,7 +74,9 @@ void WritePng(FILE* Pngname, unit32 Width, unit32 Height, unit32 bpp, unit8* Bit
 	else
 	{
 		printf("不支持的bpp类型!bpp:%d\n", bpp);
+#ifdef _WIN32
 		system("pause");
+#endif
 		exit(0);
 	}
 	png_write_info(png_ptr, info_ptr);
@@ -161,7 +163,9 @@ void process(std::string FileName, std::string PngName) {
 			j += count32;
 		}
 
+#ifndef NDEBUG
 		printf("Line:%d,Offset:%04X,Compressed_pointer:%04X,Uncompressed_pointer:%04X\n", i + 1, addr, cdatap, udatap);
+#endif
 	}
 
 	FILE* pngfp = fopen(PngName.c_str(), "wb");
