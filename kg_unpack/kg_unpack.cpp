@@ -41,14 +41,14 @@ void WritePng(FILE* Pngname, unit32 Width, unit32 Height, unit32 bpp, unit8* Bit
 	if (png_ptr == NULL)
 	{
 		printf("PNG信息创建失败!\n");
-		exit(0);
+		exit(1);
 	}
 	info_ptr = png_create_info_struct(png_ptr);
 	if (info_ptr == NULL)
 	{
 		printf("info信息创建失败!\n");
 		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-		exit(0);
+		exit(1);
 	}
 	png_init_io(png_ptr, Pngname);
 	if (bpp == 32)
@@ -77,7 +77,7 @@ void WritePng(FILE* Pngname, unit32 Width, unit32 Height, unit32 bpp, unit8* Bit
 #ifdef _WIN32
 		system("pause");
 #endif
-		exit(0);
+		exit(1);
 	}
 	png_write_info(png_ptr, info_ptr);
 
